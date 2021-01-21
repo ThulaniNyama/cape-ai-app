@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    command: --default-authentication-plugin=mysql_native_password
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment: 
+      MYSQL_DATABASE: "capeai"
+      MYSQL_ROOT_PASSWORD: "random"
+      MYSQL_USER: "thulani"
+      MYSQL_PASSWORD: "secrets"
+    volumes:
+      - ./mysql/schemaSetup.sql:/docker-entrypoint-initdb.d/1.sql
+
+  web:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    restart: always
+    ports:
+      - 8000:80
+  backend:
+    build: ./server

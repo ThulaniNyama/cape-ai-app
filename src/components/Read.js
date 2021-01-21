@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 //import RecordsList from './RecordsList';
-import readDB from '../readDB.php';
+// import readDB from '../../server/readDB.php';
 
 export default class READ extends Component {
     constructor(props) {
@@ -9,7 +9,7 @@ export default class READ extends Component {
         this.state = { Candidate: [] };
     }
     componentDidMount() {
-        axios.get('../readDB.php')
+        axios.get('cape-ai-app-main_backend/readDB.php')
             .then(response => {
                 this.setState({ Name: response.data });
             })
