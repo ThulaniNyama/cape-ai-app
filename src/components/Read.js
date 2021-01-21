@@ -9,9 +9,13 @@ export default class READ extends Component {
         this.state = { Candidate: [] };
     }
     componentDidMount() {
-        axios.get('cape-ai-app-main_backend/readDB.php')
+        axios.get('http://localhost:3000/', {headers : {
+            'content-type': 'application/json',
+            'request-method': 'get'
+        }}).then(response => response.json())
             .then(response => {
-                this.setState({ Name: response.data });
+                console.log(response)
+                this.setState({ response });
             })
             .catch(function (error) {
                 console.log(error);
@@ -29,7 +33,7 @@ export default class READ extends Component {
                     <img src="TMAN.jpg" alt="Thulani Nyama" width="280px" height="360px" />
                 </div>
 
-                <h3 align="center">About {this.candidateList()}</h3>
+                <h3 align="center">About Thulani</h3>
                 <p align="center">
                     <br />
                     Thulani is a prospective Software Engineer at Cape AI<br />

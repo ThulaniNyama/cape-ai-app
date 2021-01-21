@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: "secrets"
     volumes:
       - ./mysql/schemaSetup.sql:/docker-entrypoint-initdb.d/1.sql
-
+      - ./mysql/conf.d:/etc/mysql/conf.d/mysql.cnf
   web:
     build:
       context: .
@@ -25,3 +25,5 @@ services:
       - 8000:80
   backend:
     build: ./server
+    ports:
+      - 3000:3000
