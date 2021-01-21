@@ -12,7 +12,7 @@ export default class READ extends Component {
         axios.get('http://localhost:3000/', {headers : {
             'content-type': 'application/json',
             'request-method': 'get'
-        }}).then(response => response.json())
+        }})
             .then(response => {
                 console.log(response)
                 this.setState({ response });

@@ -14,9 +14,9 @@ const pool  = mysql.createPool({
   database        : 'capeai'
 });
  
-
+const cors = require("cors")
 var app = express();
-
+app.use(cors(""))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -27,14 +27,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "http://localhost:8000"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 app.get('/', (req, res)=>{
   pool.getConnection(function(err, connection) {
-    if (err) throw err; // not connected!
+    if (err) res.json({"error": "not yet connected"}); // not connected!
    
     // Use the connection
     connection.query("SELECT * from capeai.people where name = 'Thulani' LIMIT 1", function (error, results, fields) {
@@ -46,7 +46,7 @@ app.get('/', (req, res)=>{
       // Handle error after the release.
       if (error){
         res.json({"error": error})
-        throw error};
+        };
       // Don't use the connection here, it has been returned to the pool.
     });
   });
